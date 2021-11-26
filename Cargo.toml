@@ -1,0 +1,8 @@
+[package]
+name = "aoc-2021"
+version = "0.0.0"
+edition = "2018"
+publish = false
+license = "LGPL-3.0-or-later"
+
+[dependencies]
