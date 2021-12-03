@@ -47,7 +47,10 @@ fn life_support_rating(diagnostic_report: &Vec<Vec<char>>) -> Option<usize> {
     Some(oxygen_generator_rating * co2_scrubber_rating)
 }
 
-fn last_retained_match(diagnostic_report: &[Vec<char>], bit_criteria: impl Fn(&[char]) -> Option<char>) -> Option<usize> {
+fn last_retained_match(
+    diagnostic_report: &[Vec<char>],
+    bit_criteria: impl Fn(&[char]) -> Option<char>,
+) -> Option<usize> {
     let mut diagnostic_report = diagnostic_report.to_vec();
     let mut n = 0;
 
@@ -60,19 +63,24 @@ fn last_retained_match(diagnostic_report: &[Vec<char>], bit_criteria: impl Fn(&[
 
     usize::from_str_radix(
         &diagnostic_report.first()?.into_iter().collect::<String>(),
-        2
-    ).ok()
+        2,
+    )
+    .ok()
 }
 
 fn oxygen_generator_rating(diagnostic_report: &Vec<Vec<char>>) -> Option<usize> {
-    last_retained_match(diagnostic_report, |nth_bits| most_common(nth_bits.iter().copied()))
+    last_retained_match(diagnostic_report, |nth_bits| {
+        most_common(nth_bits.iter().copied())
+    })
 }
 
 fn co2_scrubber_rating(diagnostic_report: &Vec<Vec<char>>) -> Option<usize> {
-    last_retained_match(diagnostic_report, |nth_bits| least_common(nth_bits.iter().copied()))
+    last_retained_match(diagnostic_report, |nth_bits| {
+        least_common(nth_bits.iter().copied())
+    })
 }
 
-fn most_common<I: Iterator<Item=char>>(elements: I) -> Option<char> {
+fn most_common<I: Iterator<Item = char>>(elements: I) -> Option<char> {
     let occurances = count_occurances(elements);
 
     if occurances.get(&'0') == occurances.get(&'1') {
@@ -85,7 +93,7 @@ fn most_common<I: Iterator<Item=char>>(elements: I) -> Option<char> {
     }
 }
 
-fn least_common<I: Iterator<Item=char>>(elements: I) -> Option<char> {
+fn least_common<I: Iterator<Item = char>>(elements: I) -> Option<char> {
     let occurances = count_occurances(elements);
 
     if occurances.get(&'0') == occurances.get(&'1') {
@@ -98,7 +106,7 @@ fn least_common<I: Iterator<Item=char>>(elements: I) -> Option<char> {
     }
 }
 
-fn count_occurances<T: Clone + Eq + Hash, I: Iterator<Item=T>>(elements: I) -> HashMap<T, usize> {
+fn count_occurances<T: Clone + Eq + Hash, I: Iterator<Item = T>>(elements: I) -> HashMap<T, usize> {
     elements.fold(HashMap::new(), |mut occurances, x| {
         *occurances.entry(x).or_insert(0) += 1;
         occurances
@@ -110,22 +118,15 @@ mod tests {
     use super::*;
 
     const DIAGNOSTIC_REPORT: [&'static str; 12] = [
-        "00100",
-        "11110",
-        "10110",
-        "10111",
-        "10101",
-        "01111",
-        "00111",
-        "11100",
-        "10000",
-        "11001",
-        "00010",
-        "01010"
+        "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000", "11001",
+        "00010", "01010",
     ];
 
-    fn nth_bit<'a>(diagnostic_report: &'a [&str], i: usize) -> impl Iterator<Item=char> + 'a {
-        diagnostic_report.iter().map(move |x| x.chars().nth(i).expect("too short")).clone()
+    fn nth_bit<'a>(diagnostic_report: &'a [&str], i: usize) -> impl Iterator<Item = char> + 'a {
+        diagnostic_report
+            .iter()
+            .map(move |x| x.chars().nth(i).expect("too short"))
+            .clone()
     }
 
     #[test]
