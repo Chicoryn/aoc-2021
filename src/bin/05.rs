@@ -254,7 +254,7 @@ mod tests {
 
     #[test]
     fn _01_overlap() {
-        let mut diagram = VentDiagram::new();
+        let mut diagram = VentDiagram::with_capacity(0);
 
         for line in &EXAMPLE {
             let vent_line = line.parse::<VentLine>().expect("bad vent line");
@@ -269,7 +269,7 @@ mod tests {
 
     #[test]
     fn _02_overlap() {
-        let mut diagram = VentDiagram::new();
+        let mut diagram = VentDiagram::with_capacity(0);
 
         for line in &EXAMPLE {
             let vent_line = line.parse::<VentLine>().expect("bad vent line");
