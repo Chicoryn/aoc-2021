@@ -40,9 +40,15 @@ impl FromStr for Crab {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let horizontal_position = s.parse::<usize>()?;
 
-        Ok(Self {
+        Ok(Self::new(horizontal_position))
+    }
+}
+
+impl Crab {
+    fn new(horizontal_position: usize) -> Self {
+        Self {
             horizontal_position,
-        })
+        }
     }
 }
 
@@ -137,66 +143,16 @@ mod tests {
         let crabs = parse_crabs(EXAMPLE);
 
         assert_eq!(crabs.len(), 10);
-        assert_eq!(
-            crabs[0],
-            Crab {
-                horizontal_position: 16
-            }
-        );
-        assert_eq!(
-            crabs[1],
-            Crab {
-                horizontal_position: 1
-            }
-        );
-        assert_eq!(
-            crabs[2],
-            Crab {
-                horizontal_position: 2
-            }
-        );
-        assert_eq!(
-            crabs[3],
-            Crab {
-                horizontal_position: 0
-            }
-        );
-        assert_eq!(
-            crabs[4],
-            Crab {
-                horizontal_position: 4
-            }
-        );
-        assert_eq!(
-            crabs[5],
-            Crab {
-                horizontal_position: 2
-            }
-        );
-        assert_eq!(
-            crabs[6],
-            Crab {
-                horizontal_position: 7
-            }
-        );
-        assert_eq!(
-            crabs[7],
-            Crab {
-                horizontal_position: 1
-            }
-        );
-        assert_eq!(
-            crabs[8],
-            Crab {
-                horizontal_position: 2
-            }
-        );
-        assert_eq!(
-            crabs[9],
-            Crab {
-                horizontal_position: 14
-            }
-        );
+        assert_eq!(crabs[0], Crab::new(16));
+        assert_eq!(crabs[1], Crab::new(1));
+        assert_eq!(crabs[2], Crab::new(2));
+        assert_eq!(crabs[3], Crab::new(0));
+        assert_eq!(crabs[4], Crab::new(4));
+        assert_eq!(crabs[5], Crab::new(2));
+        assert_eq!(crabs[6], Crab::new(7));
+        assert_eq!(crabs[7], Crab::new(1));
+        assert_eq!(crabs[8], Crab::new(2));
+        assert_eq!(crabs[9], Crab::new(14));
     }
 
     #[test]
