@@ -78,7 +78,7 @@ impl<'a, 'b> MappedWord<'a, 'b> {
 fn parse_unique_signal_patterns(s: &str) -> Option<Vec<Word>> {
     Some(
         s.split_whitespace()
-            .map_while(|s| s.parse::<Word>().ok())
+            .map(|s| s.parse::<Word>().expect("bad word"))
             .collect::<Vec<_>>(),
     )
 }
@@ -86,7 +86,7 @@ fn parse_unique_signal_patterns(s: &str) -> Option<Vec<Word>> {
 fn parse_output_values(s: &str) -> Option<Vec<Word>> {
     Some(
         s.split_whitespace()
-            .map_while(|s| s.parse::<Word>().ok())
+            .map(|s| s.parse::<Word>().expect("bad word"))
             .collect::<Vec<_>>(),
     )
 }
