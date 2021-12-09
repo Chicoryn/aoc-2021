@@ -81,19 +81,10 @@ impl HeightMap {
                 // pass
             } else if self.at(x, y).map(|h| h < 9).unwrap_or(false) {
                 visited.push((x, y));
-
-                if !visited.contains(&(x - 1, y)) {
-                    to_visit.push((x - 1, y));
-                }
-                if !visited.contains(&(x + 1, y)) {
-                    to_visit.push((x + 1, y));
-                }
-                if !visited.contains(&(x, y - 1)) {
-                    to_visit.push((x, y - 1));
-                }
-                if !visited.contains(&(x, y + 1)) {
-                    to_visit.push((x, y + 1));
-                }
+                to_visit.push((x - 1, y));
+                to_visit.push((x + 1, y));
+                to_visit.push((x, y - 1));
+                to_visit.push((x, y + 1));
             }
         }
 
