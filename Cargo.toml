@@ -6,3 +6,4 @@ publish = false
 license = "LGPL-3.0-or-later"
 
 [dependencies]
+ndarray = "0.15.4"
