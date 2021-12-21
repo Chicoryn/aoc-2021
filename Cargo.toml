@@ -7,3 +7,4 @@ license = "LGPL-3.0-or-later"
 
 [dependencies]
 ndarray = "0.15.4"
+sscanf = "0.1.4"
