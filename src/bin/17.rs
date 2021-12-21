@@ -47,12 +47,9 @@ impl FromStr for Rect {
 }
 
 impl Rect {
+    #[cfg(test)]
     fn new(x: (isize, isize), y: (isize, isize)) -> Self {
         Self { x, y }
-    }
-
-    fn size(&self) -> (isize, isize) {
-        ((self.x.1 - self.x.0).abs(), (self.y.1 - self.y.0).abs())
     }
 }
 
