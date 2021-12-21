@@ -1,6 +1,6 @@
-use std::str::FromStr;
-use std::io;
 use sscanf::*;
+use std::io;
+use std::str::FromStr;
 
 use aoc_2021::input::*;
 
@@ -8,7 +8,10 @@ fn main() -> io::Result<()> {
     for line in lines()? {
         let target_area = line.parse::<Rect>().expect("not a target area");
 
-        println!("{}", highest_possible_y(&target_area).expect("no solution found"));
+        println!(
+            "{}",
+            highest_possible_y(&target_area).expect("no solution found")
+        );
         println!("{}", count_solutions(&target_area));
     }
 
@@ -18,17 +21,24 @@ fn main() -> io::Result<()> {
 #[derive(Debug, PartialEq)]
 struct Rect {
     x: (isize, isize),
-    y: (isize, isize)
+    y: (isize, isize),
 }
 
 impl FromStr for Rect {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if let Some((min_x, max_x, min_y, max_y)) = scanf!(s, "target area: x={}..{}, y={}..{}", isize, isize, isize, isize) {
+        if let Some((min_x, max_x, min_y, max_y)) = scanf!(
+            s,
+            "target area: x={}..{}, y={}..{}",
+            isize,
+            isize,
+            isize,
+            isize
+        ) {
             Ok(Rect {
                 x: (min_x, max_x),
-                y: (min_y, max_y)
+                y: (min_y, max_y),
             })
         } else {
             Err(())
@@ -42,10 +52,7 @@ impl Rect {
     }
 
     fn size(&self) -> (isize, isize) {
-        (
-            (self.x.1 - self.x.0).abs(),
-            (self.y.1 - self.y.0).abs()
-        )
+        ((self.x.1 - self.x.0).abs(), (self.y.1 - self.y.0).abs())
     }
 }
 
@@ -58,18 +65,20 @@ impl Probe {
     fn new(velocity: (isize, isize)) -> Self {
         Probe {
             position: (0, 0),
-            velocity
+            velocity,
         }
     }
 
     fn is_beyond(&self, target_area: &Rect) -> bool {
         (self.position.0 > target_area.x.1 && self.velocity.0 >= 0)
-        || (self.position.1 < target_area.y.0 && self.velocity.1 <= 0)
+            || (self.position.1 < target_area.y.0 && self.velocity.1 <= 0)
     }
 
     fn is_inside(&self, target_area: &Rect) -> bool {
-        self.position.0 >= target_area.x.0 && self.position.0 <= target_area.x.1
-            && self.position.1 >= target_area.y.0 && self.position.1 <= target_area.y.1
+        self.position.0 >= target_area.x.0
+            && self.position.0 <= target_area.x.1
+            && self.position.1 >= target_area.y.0
+            && self.position.1 <= target_area.y.1
     }
 
     #[inline]
@@ -85,7 +94,7 @@ impl Probe {
 
         Probe {
             position: (new_x, new_y),
-            velocity: (new_v_x, new_v_y)
+            velocity: (new_v_x, new_v_y),
         }
     }
 }
@@ -159,7 +168,9 @@ mod tests {
 
     #[test]
     fn _01_target_area() {
-        let target_area = "target area: x=20..30, y=-10..-5".parse::<Rect>().expect("not a target area");
+        let target_area = "target area: x=20..30, y=-10..-5"
+            .parse::<Rect>()
+            .expect("not a target area");
 
         assert_eq!(
             target_area,
@@ -172,14 +183,18 @@ mod tests {
 
     #[test]
     fn _01_example() {
-        let target_area = "target area: x=20..30, y=-10..-5".parse::<Rect>().expect("not a target area");
+        let target_area = "target area: x=20..30, y=-10..-5"
+            .parse::<Rect>()
+            .expect("not a target area");
 
         assert_eq!(highest_possible_y(&target_area), Some(45));
     }
 
     #[test]
     fn _02_example() {
-        let target_area = "target area: x=20..30, y=-10..-5".parse::<Rect>().expect("not a target area");
+        let target_area = "target area: x=20..30, y=-10..-5"
+            .parse::<Rect>()
+            .expect("not a target area");
 
         assert_eq!(count_solutions(&target_area), 112);
     }
